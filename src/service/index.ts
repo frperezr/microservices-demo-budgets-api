@@ -44,11 +44,22 @@ class Service implements IBucketService {
   addItem = async (budgetId: string, item: TBudgetItem): Promise<TBudget> => {
     try {
       let budget = await this.store.getBudget(budgetId)
-      const found = budget.items !== null ? budget.items.filter((ele) => ele.id === item.id) : []
+      const { spent, budgetLimit } = budget
+      const { stayingCost, travelingCost } = item
 
-      if (found.length === 0) {
-        await this.store.addItem(budgetId, item)
+      const found = budget.items !== null ? budget.items.filter((ele) => ele.city === item.city) : []
+
+      if (found.length > 0) {
+        return budget
       }
+
+      const newSpent = spent + (stayingCost + travelingCost)
+      if (newSpent > budgetLimit) {
+        throw new Error('budget exceeded')
+      }
+
+      await this.store.addItem(budgetId, item)
+      await this.store.updateBudget(budgetId, budgetLimit, newSpent, budgetLimit - newSpent)
 
       budget = await this.store.getBudget(budgetId)
       return budget
@@ -59,8 +70,18 @@ class Service implements IBucketService {
 
   deleteItem = async (budgetId: string, item: TBudgetItem): Promise<TBudget> => {
     try {
+      const budgetItem = await this.store.getItem(item.id)
+      const { stayingCost, travelingCost } = budgetItem
       await this.store.deleteItem(budgetId, item)
-      const budget = await this.store.getBudget(budgetId)
+
+      let budget = await this.store.getBudget(budgetId)
+      const { spent, budgetLimit } = budget
+
+      const newSpent = spent - (stayingCost + travelingCost)
+
+      await this.store.updateBudget(budgetId, budgetLimit, newSpent, budgetLimit - newSpent)
+
+      budget = await this.store.getBudget(budgetId)
       return budget
     } catch (error) {
       throw error

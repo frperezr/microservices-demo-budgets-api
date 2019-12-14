@@ -118,9 +118,10 @@ message Budget {
   string user_id = 2;
   int64 budget_limit = 3;
   int64 spent = 4;
-  string created_at = 5;
-  string updated_at = 6;
-  repeated BudgetItem items = 7;
+  int64 remaining = 5;
+  string created_at = 6;
+  string updated_at = 7;
+  repeated BudgetItem items = 8;
 }
 
 message BudgetItem {

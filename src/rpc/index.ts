@@ -227,7 +227,8 @@ class RPC implements IRPC {
   }
 
   deleteItem = async (ctx: Context, next: Function): Promise<void> => {
-    const { budgetId, sku } = ctx.req
+    const { budgetId, item } = ctx.req
+    const { id } = item
     if (budgetId === undefined) {
       const res = <TDeleteItemResponse>{
         data: null,
@@ -241,12 +242,25 @@ class RPC implements IRPC {
       return
     }
 
-    if (sku === undefined) {
+    if (item === undefined || item === null) {
       const res = <TDeleteItemResponse>{
         data: null,
         error: {
           code: 400,
-          message: 'missing sku param',
+          message: 'missing item param',
+        },
+      }
+
+      ctx.res = res
+      return
+    }
+
+    if (item === undefined) {
+      const res = <TDeleteItemResponse>{
+        data: null,
+        error: {
+          code: 400,
+          message: 'missing item.id param',
         },
       }
 
@@ -255,7 +269,7 @@ class RPC implements IRPC {
     }
 
     try {
-      const budget = await this.service.deleteItem(budgetId, sku)
+      const budget = await this.service.deleteItem(budgetId, item)
       const res = <TDeleteItemResponse>{
         data: budget,
         error: null,

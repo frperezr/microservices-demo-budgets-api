@@ -51,7 +51,7 @@ class Store implements IBudgetStore {
     }
   }
 
-  // Create ...
+  // createBudget ...
   createBudget = async (userId: string, budgetLimit: number): Promise<TBudget> => {
     const query =
       squel
@@ -59,6 +59,26 @@ class Store implements IBudgetStore {
         .into('budgets')
         .set('user_id', userId)
         .set('budget_limit', budgetLimit)
+        .toString() + ' RETURNING *'
+
+    try {
+      const result = await this.db.query(query, [])
+      return camelCaseObject(result.rows[0])
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // updateBudget ...
+  updateBudget = async (budgetId: string, budgetLimit: number, spent: number, remaining: number): Promise<TBudget> => {
+    const query =
+      squel
+        .update()
+        .table('budgets')
+        .set('budget_limit', budgetLimit)
+        .set('spent', spent)
+        .set('remaining', remaining)
+        .where('id = ?', budgetId)
         .toString() + ' RETURNING *'
 
     try {
@@ -81,6 +101,25 @@ class Store implements IBudgetStore {
 
     try {
       const result = await this.db.query(query, [])
+      return camelCaseObject(result.rows[0])
+    } catch (err) {
+      throw err
+    }
+  }
+
+  // getItem ...
+  getItem = async (itemId: string): Promise<TBudgetItem> => {
+    const query = squel
+      .select()
+      .from('budgets_items')
+      .where('id = ? and deleted_at is null', itemId)
+      .toString()
+
+    try {
+      const result = await this.db.query(query, [])
+      if (result.rows.length === 0) {
+        throw new Error('no item found')
+      }
       return camelCaseObject(result.rows[0])
     } catch (err) {
       throw err
