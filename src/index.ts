@@ -54,10 +54,9 @@ async function main() {
 
   // configure routes
   app.use('BudgetService', 'getBudget', rpc.getBudget)
-  app.use('BudgetService', 'listBudgets', rpc.listbudgets)
+  app.use('BudgetService', 'listBudgets', rpc.listBudgets)
   app.use('BudgetService', 'createBudget', rpc.createBudget)
   app.use('BudgetService', 'addItem', rpc.addItem)
-  app.use('BudgetService', 'updateItemQuantity', rpc.updateItemQuantity)
   app.use('BudgetService', 'deleteItem', rpc.deleteItem)
   app.use('BudgetService', 'deleteBudget', rpc.deleteBudget)
 

@@ -1,7 +1,7 @@
 export const listQuery = (): string => `
 SELECT array_to_json(array_agg(row_to_json(t)))
 FROM (
-    SELECT id, user_id, budget_limit, spent, created_at, updated_at,
+    SELECT id, user_id, budget_limit, spent, remaining, created_at, updated_at,
     (
         SELECT array_to_json(array_agg(row_to_json(d)))
         FROM (
@@ -18,7 +18,7 @@ FROM (
 export const getQuery = (id: string): string => `
 SELECT row_to_json(t)
 FROM (
-    SELECT id, user_id, budget_limit, spent, created_at, updated_at,
+    SELECT id, user_id, budget_limit, spent, remaining, created_at, updated_at,
     (
         SELECT array_to_json(array_agg(row_to_json(d)))
         FROM (
