@@ -1,0 +1,33 @@
+{
+  "name": "noken-budgets-api",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:frperezr/noken-budgets-api.git",
+  "author": "Francisco Pérez <frperezr93@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/src/budgets-api/src/index.js",
+    "dev": "tsc-watch --onSuccess \"node ./dist/server.js\" --onFailure \"echo Beep! Compilation Failed\" --compiler typescript/bin/tsc",
+    "test": "jest",
+    "testWithCoverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "google-protobuf": "^3.11.1",
+    "grpc": "^1.24.2",
+    "mali": "^0.19.0",
+    "pg": "^7.14.0",
+    "squel": "^5.13.0",
+    "typescript": "^3.7.3"
+  },
+  "devDependencies": {
+    "@types/google-protobuf": "^3.7.2",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.17",
+    "@types/pg": "^7.11.2",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
+    "tsc-watch": "^4.0.0"
+  }
+}

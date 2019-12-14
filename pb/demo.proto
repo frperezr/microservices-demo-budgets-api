@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package proto;
+
+// ------------------- Base -------------------
+
+message Error {
+  int32 code = 1;
+  string message = 2;
+}
+
+message Empty {}
+
+// ------------------- Auth -------------------
+
+service AuthService {
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Signup(SignupRequest) returns (SignupResponse) {}
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+  Error error = 2;
+}
+
+message SignupRequest {
+  User data = 1;
+}
+
+message SignupResponse {
+  string token = 1;
+  Error error = 2;
+}
+
+// ------------------- User -------------------
+
+service UserService {
+  rpc GetByID(GetUserByIDRequest) returns (GetUserByIDResponse) {}
+  rpc GetByEmail(GetUserByEmailRequest) returns (GetUserByEmailResponse) {}
+  rpc Create(CreateUserRequest) returns (CreateUserResponse) {}
+  rpc Update(UpdateUserRequest) returns (UpdateUserResponse) {}
+  rpc Delete(DeleteUserRequest) returns (DeleteUserResponse) {}
+}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string name = 3;
+  string last_name = 4;
+  string password = 5;
+  int64 created_at = 6;
+  int64 updated_at = 7;
+}
+
+message GetUserByIDRequest {
+  string id = 1;
+}
+
+message GetUserByIDResponse {
+  User data = 1;
+  Error error = 2;
+}
+
+message GetUserByEmailRequest {
+  string email = 1;
+}
+
+message GetUserByEmailResponse {
+  User data = 1;
+  Error error = 2;
+}
+
+message CreateUserRequest {
+  User data = 1;
+}
+
+message CreateUserResponse {
+  User data = 1;
+  Error error = 2;
+}
+
+message UpdateUserRequest {
+  User data = 1;
+}
+
+message UpdateUserResponse {
+  User data = 1;
+  Error error = 2;
+}
+
+message DeleteUserRequest {
+  string user_id = 1;
+}
+
+message DeleteUserResponse {
+  User data = 1;
+  Error error = 2;
+}
+
+// ------------------- Budget -------------------
+
+service BudgetService {
+  rpc GetBudget (GetBudgetRequest) returns (GetBudgetResponse) {}
+  rpc ListBudgets (Empty) returns (ListBudgetsResponse) {}
+  rpc CreateBudget (CreateBudgetRequest) returns (CreateBudgetResponse) {}
+  rpc AddItem (AddItemRequest) returns (AddItemResponse) {}
+  rpc DeleteItem (DeleteItemRequest) returns (DeleteItemResponse) {}
+  rpc DeleteBudget (DeleteBudgetRequest) returns (DeleteBudgetResponse) {}
+}
+
+message Budget {
+  string id = 1;
+  string user_id = 2;
+  int64 budget_limit = 3;
+  int64 spent = 4;
+  string created_at = 5;
+  string updated_at = 6;
+  repeated BudgetItem items = 7;
+}
+
+message BudgetItem {
+  string id = 1;
+  string city = 2;
+  int32 traveling_cost = 3;
+  int32 staying_cost = 4;
+}
+
+message GetBudgetRequest { 
+  string id = 1;
+}
+
+message GetBudgetResponse {
+  Budget data = 1;
+  Error error = 2;
+}
+
+message ListBudgetsResponse {
+  repeated Budget data = 1;
+  Error error = 2;
+}
+
+message CreateBudgetRequest {
+  string user_id = 1;
+  int32 budget_limit = 2;
+}
+
+message CreateBudgetResponse {
+  Budget data = 1;
+  Error error = 2;
+}
+
+message AddItemRequest {
+  string budget_id = 1;
+  BudgetItem item = 2;
+}
+
+message AddItemResponse {
+  Budget data = 1;
+  Error error = 2;
+}
+
+message DeleteItemRequest {
+  string budget_id = 1;
+  BudgetItem item = 2;
+}
+
+message DeleteItemResponse {
+  Budget data = 1;
+  Error error = 2;
+}
+
+message DeleteBudgetRequest {
+  string id = 1;
+}
+
+message DeleteBudgetResponse {
+  Budget data = 1;
+  Error error = 2;
+}

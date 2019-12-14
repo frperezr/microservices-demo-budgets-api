@@ -1,0 +1,28 @@
+version: '3'
+
+volumes:
+  postgres-data:
+    driver: local
+  node-modules:
+    driver: local
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  budgets-api:
+    container_name: budgets-api
+    image: frperezr/noken-budgets-api:0.0.1
+    ports:
+      - 3040:3040
+    environment:
+      - PORT=3040
+      - POSTGRES_DSN=postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable
+      - PROTO_PATH=/budgets-api/pb/demo.proto
+    volumes:
+      - .:/budgets-api
+      - node-modules:/budgets-api/node_modules
