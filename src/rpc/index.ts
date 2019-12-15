@@ -14,9 +14,9 @@ import {
   TDeleteBudgetResponse,
 } from '../../../../lib/ts/types'
 
-import { IRPC } from '../../../../lib/ts/interfaces'
+import { IBudgetRPC } from '../../../../lib/ts/interfaces'
 
-class RPC implements IRPC {
+class RPC implements IBudgetRPC {
   private service: Service
 
   constructor(service: Service) {

@@ -116,9 +116,9 @@ service BudgetService {
 message Budget {
   string id = 1;
   string user_id = 2;
-  int64 budget_limit = 3;
-  int64 spent = 4;
-  int64 remaining = 5;
+  int32 budget_limit = 3;
+  int32 spent = 4;
+  int32 remaining = 5;
   string created_at = 6;
   string updated_at = 7;
   repeated BudgetItem items = 8;
@@ -181,5 +181,92 @@ message DeleteBudgetRequest {
 
 message DeleteBudgetResponse {
   Budget data = 1;
+  Error error = 2;
+}
+
+// ------------------- Country -------------------
+service CountryService {
+  rpc GetCity (GetCityRequest) returns (GetCityResponse) {}
+  rpc ListCities (ListCitiesRequest) returns (ListCitiesResponse) {}
+  rpc GetCountry (GetCountryRequest) returns (GetCountryResponse) {}
+  rpc ListCountries (ListCountriesRequest) returns (ListCountriesResponse) {}
+  rpc GetContinent (GetContinentRequest) returns (GetContinentResponse) {}
+  rpc ListContinents (Empty) returns (ListContinentsResponse) {}
+}
+
+message Continent {
+  int32 id = 1;
+  string code = 2;
+  string name = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}
+
+message Country {
+  int32 id = 1;
+  string continent_code = 2;
+  string code = 3;
+  string name = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message City {
+  int32 id = 1;
+  int32 stay_price = 2;
+  int32 travel_price = 3;
+  string country = 4;
+  string name = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message GetCityRequest {
+  int32 id = 1;
+}
+
+message GetCityResponse {
+  City data = 1;
+  Error error = 2;
+}
+
+message ListCitiesRequest {
+  string country = 1;
+}
+
+message ListCitiesResponse {
+  repeated City data = 1;
+  Error error = 2;
+}
+
+message GetCountryRequest {
+  int32 id = 1;
+}
+
+message GetCountryResponse {
+  Country data = 1;
+  Error error = 2;
+}
+
+message ListCountriesRequest {
+  string continent = 1;
+}
+
+message ListCountriesResponse {
+  repeated Country data = 1;
+  Error error = 2;
+}
+
+message GetContinentRequest {
+  int32 id = 1;
+}
+
+message GetContinentResponse {
+  Continent data = 1;
+  Error error = 2;
+}
+
+message ListContinentsResponse {
+  repeated Continent data = 1;
   Error error = 2;
 }
