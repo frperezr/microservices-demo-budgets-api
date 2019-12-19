@@ -23,18 +23,18 @@ class Service implements IBucketService {
     }
   }
 
-  listBudgets = async (): Promise<[TBudget]> => {
+  listBudgets = async (userId: string): Promise<[TBudget]> => {
     try {
-      const budgets = await this.store.listBudgets()
+      const budgets = await this.store.listBudgets(userId)
       return budgets
     } catch (err) {
       throw err
     }
   }
 
-  createBudget = async (userId: string, budgetLimit: number): Promise<TBudget> => {
+  createBudget = async (userId: string, budgetLimit: number, name: string): Promise<TBudget> => {
     try {
-      const budget = await this.store.createBudget(userId, budgetLimit)
+      const budget = await this.store.createBudget(userId, budgetLimit, name)
       return budget
     } catch (err) {
       throw err
