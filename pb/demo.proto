@@ -105,23 +105,24 @@ message DeleteUserResponse {
 // ------------------- Budget -------------------
 
 service BudgetService {
-  rpc GetBudget (GetBudgetRequest) returns (GetBudgetResponse) {}
-  rpc ListBudgets (Empty) returns (ListBudgetsResponse) {}
-  rpc CreateBudget (CreateBudgetRequest) returns (CreateBudgetResponse) {}
-  rpc AddItem (AddItemRequest) returns (AddItemResponse) {}
-  rpc DeleteItem (DeleteItemRequest) returns (DeleteItemResponse) {}
-  rpc DeleteBudget (DeleteBudgetRequest) returns (DeleteBudgetResponse) {}
+  rpc GetBudget(GetBudgetRequest) returns (GetBudgetResponse) {}
+  rpc ListBudgets(Empty) returns (ListBudgetsResponse) {}
+  rpc CreateBudget(CreateBudgetRequest) returns (CreateBudgetResponse) {}
+  rpc AddItem(AddItemRequest) returns (AddItemResponse) {}
+  rpc DeleteItem(DeleteItemRequest) returns (DeleteItemResponse) {}
+  rpc DeleteBudget(DeleteBudgetRequest) returns (DeleteBudgetResponse) {}
 }
 
 message Budget {
   string id = 1;
-  string user_id = 2;
-  int32 budget_limit = 3;
-  int32 spent = 4;
-  int32 remaining = 5;
-  string created_at = 6;
-  string updated_at = 7;
-  repeated BudgetItem items = 8;
+  string name = 2;
+  string user_id = 3;
+  int32 budget_limit = 4;
+  int32 spent = 5;
+  int32 remaining = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  repeated BudgetItem items = 9;
 }
 
 message BudgetItem {
@@ -131,7 +132,7 @@ message BudgetItem {
   int32 staying_cost = 4;
 }
 
-message GetBudgetRequest { 
+message GetBudgetRequest {
   string id = 1;
 }
 
@@ -148,6 +149,7 @@ message ListBudgetsResponse {
 message CreateBudgetRequest {
   string user_id = 1;
   int32 budget_limit = 2;
+  string budget_name = 3;
 }
 
 message CreateBudgetResponse {
@@ -186,12 +188,12 @@ message DeleteBudgetResponse {
 
 // ------------------- Country -------------------
 service CountryService {
-  rpc GetCity (GetCityRequest) returns (GetCityResponse) {}
-  rpc ListCities (ListCitiesRequest) returns (ListCitiesResponse) {}
-  rpc GetCountry (GetCountryRequest) returns (GetCountryResponse) {}
-  rpc ListCountries (ListCountriesRequest) returns (ListCountriesResponse) {}
-  rpc GetContinent (GetContinentRequest) returns (GetContinentResponse) {}
-  rpc ListContinents (Empty) returns (ListContinentsResponse) {}
+  rpc GetCity(GetCityRequest) returns (GetCityResponse) {}
+  rpc ListCities(ListCitiesRequest) returns (ListCitiesResponse) {}
+  rpc GetCountry(GetCountryRequest) returns (GetCountryResponse) {}
+  rpc ListCountries(ListCountriesRequest) returns (ListCountriesResponse) {}
+  rpc GetContinent(GetContinentRequest) returns (GetContinentResponse) {}
+  rpc ListContinents(Empty) returns (ListContinentsResponse) {}
 }
 
 message Continent {
