@@ -1,4 +1,4 @@
-export const listQuery = (): string => `
+export const listQuery = (userId: string): string => `
 SELECT array_to_json(array_agg(row_to_json(t)))
 FROM (
     SELECT id, user_id, budget_limit, spent, remaining, created_at, updated_at,
@@ -11,7 +11,7 @@ FROM (
         )d
     ) AS items
     FROM budgets
-    WHERE deleted_at IS NULL
+    WHERE deleted_at IS NULL and user_id = '${userId}'
 )t
 `
 
