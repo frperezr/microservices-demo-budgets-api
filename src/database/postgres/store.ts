@@ -35,9 +35,9 @@ class Store implements IBudgetStore {
   }
 
   // listBudgets ...
-  listBudgets = async (): Promise<[TBudget]> => {
+  listBudgets = async (userId: string): Promise<[TBudget]> => {
     try {
-      const result = await this.db.query(listQuery(), [])
+      const result = await this.db.query(listQuery(userId), [])
       if (result.rows.length === 0) {
         throw new Error('no budgets found')
       }
@@ -52,13 +52,14 @@ class Store implements IBudgetStore {
   }
 
   // createBudget ...
-  createBudget = async (userId: string, budgetLimit: number): Promise<TBudget> => {
+  createBudget = async (userId: string, budgetLimit: number, name: string): Promise<TBudget> => {
     const query =
       squel
         .insert()
         .into('budgets')
         .set('user_id', userId)
         .set('budget_limit', budgetLimit)
+        .set('name', name)
         .toString() + ' RETURNING *'
 
     try {
@@ -78,6 +79,7 @@ class Store implements IBudgetStore {
         .set('budget_limit', budgetLimit)
         .set('spent', spent)
         .set('remaining', remaining)
+        .set('name', name)
         .where('id = ?', budgetId)
         .toString() + ' RETURNING *'
 
