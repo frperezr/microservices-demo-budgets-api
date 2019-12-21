@@ -79,7 +79,11 @@ class Service implements IBucketService {
 
       const newSpent = spent - (stayingCost + travelingCost)
 
-      await this.store.updateBudget(budgetId, budgetLimit, newSpent, budgetLimit - newSpent)
+      if (newSpent < 0) {
+        await this.store.updateBudget(budgetId, budgetLimit, 0, budgetLimit)
+      } else {
+        await this.store.updateBudget(budgetId, budgetLimit, newSpent, budgetLimit - newSpent)
+      }
 
       budget = await this.store.getBudget(budgetId)
       return budget

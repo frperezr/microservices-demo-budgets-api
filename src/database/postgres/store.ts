@@ -79,7 +79,6 @@ class Store implements IBudgetStore {
         .set('budget_limit', budgetLimit)
         .set('spent', spent)
         .set('remaining', remaining)
-        .set('name', name)
         .where('id = ?', budgetId)
         .toString() + ' RETURNING *'
 

@@ -97,7 +97,7 @@ class RPC implements IBudgetRPC {
   }
 
   createBudget = async (ctx: Context, next: Function): Promise<void> => {
-    const { userId, budgetLimit, name } = ctx.req
+    const { userId, budgetLimit, budgetName } = ctx.req
     if (userId === undefined) {
       const res = <TCreateBudgetResponse>{
         data: null,
@@ -124,12 +124,12 @@ class RPC implements IBudgetRPC {
       return
     }
 
-    if (name === undefined) {
+    if (budgetName === undefined) {
       const res = <TCreateBudgetResponse>{
         data: null,
         error: {
           code: 400,
-          message: 'missing name param',
+          message: 'missing budgetName param',
         },
       }
 
@@ -138,7 +138,7 @@ class RPC implements IBudgetRPC {
     }
 
     try {
-      const budget = await this.service.createBudget(userId, budgetLimit, name)
+      const budget = await this.service.createBudget(userId, budgetLimit, budgetName)
       const res = <TCreateBudgetResponse>{
         data: budget,
         error: null,
