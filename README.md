@@ -17,3 +17,9 @@ Make Docker image
 ```
 make d
 ```
+
+Run
+
+```
+docker-compose up
+```
