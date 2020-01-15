@@ -2,6 +2,14 @@ VERSION=$$(cat package.json | grep version | sed 's/"/ /g' | awk {'print $$3'})
 USER=frperezr
 SVC=noken-budgets-api
 
+install i:
+	@echo "[install] Installing dependencies..."
+	@yarn
+
+build b:
+	@echo "[building] Building service..."
+	@yarn build
+
 run r:
 	@echo "[running] Running service..."
 	@yarn start
