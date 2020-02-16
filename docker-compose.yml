@@ -16,7 +16,7 @@ services:
       - 5432:5432
   budgets-api:
     container_name: budgets-api
-    image: frperezr/noken-budgets-api:0.0.1
+    image: frperezr/budgets-api:0.0.1
     ports:
       - 3040:3040
     environment:

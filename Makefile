@@ -1,6 +1,6 @@
 VERSION=$$(cat package.json | grep version | sed 's/"/ /g' | awk {'print $$3'})
 USER=frperezr
-SVC=noken-budgets-api
+SVC=microservices-demo-budgets-api
 
 install i:
 	@echo "[install] Installing dependencies..."
